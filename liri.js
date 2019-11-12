@@ -20,6 +20,6 @@ switch (userInputA) {
         break;
 
     case "do-what-it-says":
-        function doInfo();
+        function doWhat();
         break;
 }
