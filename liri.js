@@ -2,6 +2,7 @@ require("dotenv").config();
 const Spotify = require('node-spotify-api');
 var keys = require("./keys.js");
 var axios = require("axios");
+var fs = require("fs");
 var moment = require('moment');
 moment().format();
 
@@ -65,6 +66,11 @@ function concertInfo() {
 }
 
 function movieInfo() {
+
+    if (!userTitle) {
+        userTitle = "Mr. Nobody";
+    }
+
     // Then run a request with axios to the OMDB API with the movie specified
     var queryMovieUrl = "http://www.omdbapi.com/?t=" + userTitle + "&y=&plot=short&apikey=trilogy";
 
@@ -72,61 +78,40 @@ function movieInfo() {
     console.log(queryMovieUrl);
 
     axios.get(queryMovieUrl).then(
-            function(response) {
+        function(response) {
 
-                var movieInfo = response.data;
-                // console.log(movieInfo);
+            var movieInfo = response.data;
+            // console.log(movieInfo);
 
-                var movieTitle = movieInfo.Title;
-                console.log("Title: " + movieTitle);
+            var movieTitle = movieInfo.Title;
+            console.log("Title: " + movieTitle);
 
-                var movieReleastYear = movieInfo.Year;
-                console.log("Release Year: " + movieReleastYear);
+            var movieReleastYear = movieInfo.Year;
+            console.log("Release Year: " + movieReleastYear);
 
-                var movieIMDBRating = movieInfo.imdbRating;
-                console.log("IMDB Rating: " + movieIMDBRating);
+            var movieIMDBRating = movieInfo.imdbRating;
+            console.log("IMDB Rating: " + movieIMDBRating);
 
-                var movieRTRating = movieInfo.Ratings[1].Value;
-                console.log("Rotten Tomatoes Rating: " + movieRTRating);
+            var movieRTRating = movieInfo.Ratings[1].Value;
+            console.log("Rotten Tomatoes Rating: " + movieRTRating);
 
-                var movieCountry = movieInfo.Country;
-                console.log("Production Country: " + movieCountry);
+            var movieCountry = movieInfo.Country;
+            console.log("Production Country: " + movieCountry);
 
-                var movieLanguage = movieInfo.Language;
-                console.log("Language: " + movieLanguage);
+            var movieLanguage = movieInfo.Language;
+            console.log("Language: " + movieLanguage);
 
-                var moviePlot = movieInfo.Plot;
-                console.log("Plot: " + moviePlot);
+            var moviePlot = movieInfo.Plot;
+            console.log("Plot: " + moviePlot);
 
-                var movieActors = movieInfo.Actors;
-                console.log("Actors: " + movieActors);
+            var movieActors = movieInfo.Actors;
+            console.log("Actors: " + movieActors);
 
-            })
-        .catch(function(error) {
-            if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                console.log("---------------Data---------------");
-                console.log(error.response.data);
-                console.log("---------------Status---------------");
-                console.log(error.response.status);
-                console.log("---------------Status---------------");
-                console.log(error.response.headers);
-            } else if (error.request) {
-                // The request was made but no response was received
-                // `error.request` is an object that comes back with details pertaining to the error that occurred.
-                console.log(error.request);
-            } else {
-                // Something happened in setting up the request that triggered an Error
-                console.log("Error", error.message);
-            }
-            console.log(error.config);
-        });
+        })
 }
 
-var songInfo = "";
-
 function songInfo() {
+
     // if no search title is provided
     if (!userTitle) {
         userTitle = "The Sign";
@@ -172,10 +157,25 @@ function songInfo() {
 
             var songAlbum = songInfo.album.name;
             console.log("Album: " + songAlbum);
-
-
-
         })
     }
 
+}
+
+function doWhat() {
+    fs.readFile("random.txt", "utf-8", function(error, data) {
+        if (error) {
+            return console.log(error);
+        }
+        console.log(data);
+        var arr = data.split(",");
+        console.log(arr);
+
+        userCat = arr[0];
+        userTitle = arr[1];
+        console.log(userCat);
+        console.log(userTitle);
+
+        songInfo();
+    });
 }
