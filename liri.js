@@ -6,9 +6,12 @@ var moment = require('moment');
 moment().format();
 
 var spotify = new Spotify(keys.spotify);
+// var seatgeek = keys.seatgeek;
 
+//capture command line arguments
 var userCat = process.argv[2];
 
+//capture title of user request
 var nodeArgs = process.argv;
 var userTitle = "";
 
@@ -21,6 +24,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
     }
 }
 
+//switch case statement to run different functions based on category of user request
 switch (userCat) {
     case "concert-this":
         concertInfo();
@@ -39,14 +43,35 @@ switch (userCat) {
         break;
 }
 
+function concertInfo() {
+
+    var queryEventUrl = "https://api.seatgeek.com/2/events?q=" + userTitle + "&client_id=MTk0MzUzNDR8MTU3MzU5ODU4Mi4yMg"
+
+    axios.get(queryEventUrl).then(
+        function(response) {
+            var eventInfo = response.data.events[0];
+            // console.log(eventInfo);
+
+            var eventName = eventInfo.venue.name;
+            console.log("Venue: " + eventName);
+
+            var eventLocation = eventInfo.venue.address + ", " + eventInfo.venue.display_location;
+            console.log("Location: " + eventLocation);
+
+            var eventDate = eventInfo.datetime_local;
+            console.log("Date: " + moment(eventDate).format("MM/DD/YYYY"));
+        }
+    )
+}
+
 function movieInfo() {
     // Then run a request with axios to the OMDB API with the movie specified
-    var queryUrl = "http://www.omdbapi.com/?t=" + userTitle + "&y=&plot=short&apikey=trilogy";
+    var queryMovieUrl = "http://www.omdbapi.com/?t=" + userTitle + "&y=&plot=short&apikey=trilogy";
 
     // This line is just to help us debug against the actual URL.
-    console.log(queryUrl);
+    console.log(queryMovieUrl);
 
-    axios.get(queryUrl).then(
+    axios.get(queryMovieUrl).then(
             function(response) {
 
                 var movieInfo = response.data;
