@@ -124,25 +124,58 @@ function movieInfo() {
         });
 }
 
+var songInfo = "";
+
 function songInfo() {
-    spotify.search({ type: 'track', query: userTitle }, function(err, data) {
-        if (err) {
-            return console.log('Error occurred: ' + err);
-        }
-        var songInfo = data.tracks.items[0];
-        // console.log(songInfo);
+    // if no search title is provided
+    if (!userTitle) {
+        userTitle = "The Sign";
 
-        var songArtist = songInfo.artists[0].name;
-        console.log("Artist: " + songArtist);
+        spotify.search({ type: 'track', query: userTitle }, function(err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            }
 
-        var songName = songInfo.name;
-        console.log("Song name: " + songName);
+            var songInfo = data.tracks.items[5];
+            // console.log(songInfo);
 
-        var songPreview = songInfo.uri;
-        console.log("Preview link: " + songPreview);
+            var songArtist = songInfo.artists[0].name;
+            console.log("Artist: " + songArtist);
 
-        var songAlbum = songInfo.album.name;
-        console.log("Album: " + songAlbum);
+            var songName = songInfo.name;
+            console.log("Song name: " + songName);
 
-    });
+            var songPreview = songInfo.uri;
+            console.log("Preview link: " + songPreview);
+
+            var songAlbum = songInfo.album.name;
+            console.log("Album: " + songAlbum);
+        })
+
+    } else {
+        spotify.search({ type: 'track', query: userTitle }, function(err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            }
+
+            var songInfo = data.tracks.items[0];
+            // console.log(songInfo);
+
+            var songArtist = songInfo.artists[0].name;
+            console.log("Artist: " + songArtist);
+
+            var songName = songInfo.name;
+            console.log("Song name: " + songName);
+
+            var songPreview = songInfo.uri;
+            console.log("Preview link: " + songPreview);
+
+            var songAlbum = songInfo.album.name;
+            console.log("Album: " + songAlbum);
+
+
+
+        })
+    }
+
 }
