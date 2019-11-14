@@ -7,7 +7,6 @@ var moment = require('moment');
 moment().format();
 
 var spotify = new Spotify(keys.spotify);
-// var seatgeek = keys.seatgeek;
 
 //capture command line arguments
 var userCat = process.argv[2];
@@ -46,23 +45,27 @@ switch (userCat) {
 
 function concertInfo() {
 
-    var queryEventUrl = "https://api.seatgeek.com/2/events?q=" + userTitle + "&client_id=MTk0MzUzNDR8MTU3MzU5ODU4Mi4yMg"
+    if (!userTitle) {
+        console.log("You have to search for a team, artist, event or venue")
+    } else {
 
-    axios.get(queryEventUrl).then(
-        function(response) {
-            var eventInfo = response.data.events[0];
-            // console.log(eventInfo);
+        var queryEventUrl = "https://api.seatgeek.com/2/events?q=" + userTitle + "&client_id=MTk0MzUzNDR8MTU3MzU5ODU4Mi4yMg"
 
-            var eventName = eventInfo.venue.name;
-            console.log("Venue: " + eventName);
+        axios.get(queryEventUrl).then(
+            function(response) {
+                var eventInfo = response.data.events[0];
+                // console.log(eventInfo);
 
-            var eventLocation = eventInfo.venue.address + ", " + eventInfo.venue.display_location;
-            console.log("Location: " + eventLocation);
+                var eventName = eventInfo.venue.name;
+                console.log("Venue: " + eventName);
 
-            var eventDate = eventInfo.datetime_local;
-            console.log("Date: " + moment(eventDate).format("MM/DD/YYYY"));
-        }
-    )
+                var eventLocation = eventInfo.venue.address + ", " + eventInfo.venue.display_location;
+                console.log("Location: " + eventLocation);
+
+                var eventDate = eventInfo.datetime_local;
+                console.log("Date: " + moment(eventDate).format("MM/DD/YYYY"));
+            });
+    }
 }
 
 function movieInfo() {
@@ -71,11 +74,9 @@ function movieInfo() {
         userTitle = "Mr. Nobody";
     }
 
-    // Then run a request with axios to the OMDB API with the movie specified
+    // Runs a request with axios to the OMDB API with the movie specified
     var queryMovieUrl = "http://www.omdbapi.com/?t=" + userTitle + "&y=&plot=short&apikey=trilogy";
 
-    // This line is just to help us debug against the actual URL.
-    console.log(queryMovieUrl);
 
     axios.get(queryMovieUrl).then(
         function(response) {
@@ -162,19 +163,33 @@ function songInfo() {
 
 }
 
+function songInfo2() {
+    var songArtist = songInfo.artists[0].name;
+    console.log("Artist: " + songArtist);
+
+    var songName = songInfo.name;
+    console.log("Song name: " + songName);
+
+    var songPreview = songInfo.uri;
+    console.log("Preview link: " + songPreview);
+
+    var songAlbum = songInfo.album.name;
+    console.log("Album: " + songAlbum);
+}
+
 function doWhat() {
     fs.readFile("random.txt", "utf-8", function(error, data) {
         if (error) {
             return console.log(error);
         }
-        console.log(data);
+        // console.log(data);
         var arr = data.split(",");
-        console.log(arr);
+        // console.log(arr);
 
         userCat = arr[0];
         userTitle = arr[1];
-        console.log(userCat);
-        console.log(userTitle);
+        // console.log(userCat);
+        // console.log(userTitle);
 
         songInfo();
     });
