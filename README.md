@@ -39,7 +39,7 @@ For the `do-what-it-says` search parameter, the app will search the song "I Want
 For additional searches, simply repeat the steps.
 
 ## Video of app functioning 
-This has been provided separately
+https://drive.google.com/file/d/1J8HbELEnIRPvgsKo7wkbY124WkQSeMad/view?usp=sharing
 
 ## Deployed link: 
 https://gistewart.github.io/liri-node-app/
