@@ -13,16 +13,17 @@ A Node.js project was initialized, 4 Node packages were installed:
 A liri.js file was created with the code that runs the application. 
 
 ## Instructions for the User
-Step 1: open the Terminal
-Step 2: enter the following text: `node liri.js`
-Step 3: enter a space
-Step 4: enter one of the following search parameters:
+Please complete the following steps:
+1. open the Terminal
+2. enter the following text: `node liri.js`
+3. enter a space
+4. enter one of the following search parameters:
    * `concert-this`
    * `spotify-this-song`
    * `movie-this`
    * `do-what-it-says`
-Step 5: enter a space
-Step 6: for the first 3 categories, enter the name of the performer, the song title, or the movie title, respectively, as the second search term.
+5. enter a space
+6. for the first 3 categories, enter the name of the performer, the song title, or the movie title, respectively, as the second search term.
 
 Example: `node liri.js movie-this jaws`
 
@@ -48,7 +49,7 @@ https://gistewart.github.io/liri-node-app/
 Node packages and APIs used were as follows:
 * [Node-Spotify-API](https://www.npmjs.com/package/node-spotify-api)
 * [Axios](https://www.npmjs.com/package/axios)
-* [OMDB API](http://www.omdbapi.com) and the 
+* [OMDB API](http://www.omdbapi.com)
 * [SeatGeek API](http://platform.seatgeek.com/#events)
 * [Moment](https://www.npmjs.com/package/moment)
 * [DotEnv](https://www.npmjs.com/package/dotenv)
